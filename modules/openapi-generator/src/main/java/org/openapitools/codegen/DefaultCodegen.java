@@ -99,8 +99,10 @@ public class DefaultCodegen implements CodegenConfig {
 
     public static FeatureSet DefaultFeatureSet;
 
-    // A cache of sanitized words. The sanitizeName() method is invoked many times with the same
-    // arguments, this cache is used to optimized performance.
+    /**
+     * A cache of sanitized words. The sanitizeName() method is invoked many times with the same
+     * arguments, this cache is used to optimized performance.
+     */
     private static final Cache<SanitizeNameOptions, String> sanitizedNameCache;
     private static final String xSchemaTestExamplesKey = "x-schema-test-examples";
     private static final String xSchemaTestExamplesRefPrefix = "#/components/x-schema-test-examples/";
@@ -167,29 +169,49 @@ public class DefaultCodegen implements CodegenConfig {
     protected String outputFolder = "";
     protected Set<String> defaultIncludes;
     protected Map<String, String> typeMapping;
-    // instantiationTypes map from container types only: set, map, and array to the in language-type
+    /**
+     * instantiationTypes map from container types only: set, map, and array to the in language-type
+     */
     protected Map<String, String> instantiationTypes;
     protected Set<String> reservedWords;
     protected Set<String> languageSpecificPrimitives = new HashSet<>();
     protected Set<String> openapiGeneratorIgnoreList = new HashSet<>();
     protected Map<String, String> importMapping = new HashMap<>();
-    // a map to store the mapping between a schema and the new one
+    /**
+     * a map to store the mapping between a schema and the new one
+     */
     protected Map<String, String> schemaMapping = new HashMap<>();
-    // a map to store the mapping between inline schema and the name provided by the user
+    /**
+     * a map to store the mapping between inline schema and the name provided by the user
+     */
     protected Map<String, String> inlineSchemaNameMapping = new HashMap<>();
-    // a map to store the inline schema naming conventions
+    /**
+     * a map to store the inline schema naming conventions
+     */
     protected Map<String, String> inlineSchemaOption = new HashMap<>();
-    // a map to store the mapping between property name and the name provided by the user
+    /**
+     * a map to store the mapping between property name and the name provided by the user
+     */
     protected Map<String, String> nameMapping = new HashMap<>();
-    // a map to store the mapping between parameter name and the name provided by the user
+    /**
+     * a map to store the mapping between parameter name and the name provided by the user
+     */
     protected Map<String, String> parameterNameMapping = new HashMap<>();
-    // a map to store the mapping between model name and the name provided by the user
+    /**
+     * a map to store the mapping between model name and the name provided by the user
+     */
     protected Map<String, String> modelNameMapping = new HashMap<>();
-    // a map to store the mapping between enum name and the name provided by the user
+    /**
+     * a map to store the mapping between enum name and the name provided by the user
+     */
     protected Map<String, String> enumNameMapping = new HashMap<>();
-    // a map to store the mapping between operation id name and the name provided by the user
+    /**
+     * a map to store the mapping between operation id name and the name provided by the user
+     */
     protected Map<String, String> operationIdNameMapping = new HashMap<>();
-    // a map to store the rules in OpenAPI Normalizer
+    /**
+     * a map to store the rules in OpenAPI Normalizer
+     */
     protected Map<String, String> openapiNormalizer = new HashMap<>();
     @Setter protected String modelPackage = "", apiPackage = "";
     protected String fileSuffix;
@@ -200,10 +222,10 @@ public class DefaultCodegen implements CodegenConfig {
     protected String testPackage = "";
     @Setter protected String filesMetadataFilename = "FILES";
     @Setter protected String versionMetadataFilename = "VERSION";
-    /*
-    apiTemplateFiles are for API outputs only (controllers/handlers).
-    API templates may be written multiple times; APIs are grouped by tag and the file is written once per tag group.
-    */
+    /**
+     * apiTemplateFiles are for API outputs only (controllers/handlers).
+     * API templates may be written multiple times; APIs are grouped by tag and the file is written once per tag group.
+     */
     protected Map<String, String> apiTemplateFiles = new HashMap<>();
     protected Map<String, String> modelTemplateFiles = new HashMap<>();
     protected Map<String, String> apiTestTemplateFiles = new HashMap<>();
@@ -217,11 +239,11 @@ public class DefaultCodegen implements CodegenConfig {
     protected Map<String, String> serverVariables = new HashMap<>();
     protected Map<String, Object> vendorExtensions = new HashMap<>();
     protected Map<String, String> templateOutputDirs = new HashMap<>();
-    /*
-    Supporting files are those which aren't models, APIs, or docs.
-    These get a different map of data bound to the templates. Supporting files are written once.
-    See also 'apiTemplateFiles'.
-    */
+    /**
+     * Supporting files are those which aren't models, APIs, or docs.
+     * These get a different map of data bound to the templates. Supporting files are written once.
+     * See also 'apiTemplateFiles'.
+     */
     protected List<SupportingFile> supportingFiles = new ArrayList<>();
     protected List<CliOption> cliOptions = new ArrayList<>();
     protected boolean skipOverwrite;
@@ -231,7 +253,9 @@ public class DefaultCodegen implements CodegenConfig {
     @Getter @Setter
     protected int removeOperationIdPrefixCount = 1;
     protected boolean skipOperationExample;
-    // sort operations by default
+    /**
+     * sort operations by default
+     */
     protected boolean skipSortingOperations = false;
 
     protected final static Pattern XML_MIME_PATTERN = Pattern.compile("(?i)application\\/(.*)[+]?xml(;.*)?");
@@ -274,66 +298,102 @@ public class DefaultCodegen implements CodegenConfig {
     protected String gitHost, gitUserId, gitRepoId, releaseNote;
     protected String httpUserAgent;
     protected Boolean hideGenerationTimestamp = true;
-    // How to encode special characters like $
-    // They are translated to words like "Dollar"
-    // Then translated back during JSON encoding and decoding
+    /**
+     * How to encode special characters like $
+     * They are translated to words like "Dollar"
+     * Then translated back during JSON encoding and decoding
+     */
     protected Map<String, String> specialCharReplacements = new LinkedHashMap<>();
-    // When a model is an alias for a simple type
+    /**
+     * When a model is an alias for a simple type
+     */
     protected Map<String, String> typeAliases = Collections.emptyMap();
     @Getter @Setter
     protected Boolean prependFormOrBodyParameters = false;
-    // The extension of the generated documentation files (defaults to markdown .md)
+    /**
+     * The extension of the generated documentation files (defaults to markdown .md)
+     */
     protected String docExtension;
     protected String ignoreFilePathOverride;
-    // flag to indicate whether to use environment variable to post process file
+    /**
+     * flag to indicate whether to use environment variable to post process file
+     */
     protected boolean enablePostProcessFile = false;
     private TemplatingEngineAdapter templatingEngine = new MustacheEngineAdapter();
-    // flag to indicate whether to use the utils.OneOfImplementorAdditionalData related logic
+    /**
+     * flag to indicate whether to use the utils.OneOfImplementorAdditionalData related logic
+     */
     protected boolean useOneOfInterfaces = false;
-    // whether or not the oneOf imports machinery should add oneOf interfaces as imports in implementing classes
+    /**
+     * whether or not the oneOf imports machinery should add oneOf interfaces as imports in implementing classes
+     */
     protected boolean addOneOfInterfaceImports = false;
     protected List<CodegenModel> addOneOfInterfaces = new ArrayList<>();
 
-    // flag to indicate whether to only update files whose contents have changed
+    /**
+     * flag to indicate whether to only update files whose contents have changed
+     */
     protected boolean enableMinimalUpdate = false;
 
-    // acts strictly upon a spec, potentially modifying it to have consistent behavior across generators.
+    /**
+     * acts strictly upon a spec, potentially modifying it to have consistent behavior across generators.
+     */
     protected boolean strictSpecBehavior = true;
-    // flag to indicate whether enum value prefixes are removed
+    /**
+     * flag to indicate whether enum value prefixes are removed
+     */
     protected boolean removeEnumValuePrefix = false;
 
-    // Support legacy logic for evaluating discriminators
+    /**
+     * Support legacy logic for evaluating discriminators
+     */
     @Setter protected boolean legacyDiscriminatorBehavior = true;
 
-    // Specify what to do if the 'additionalProperties' keyword is not present in a schema.
-    // See CodegenConstants.java for more details.
+    /**
+     * Specify what to do if the 'additionalProperties' keyword is not present in a schema.
+     * See CodegenConstants.java for more details.
+     */
     @Setter protected boolean disallowAdditionalPropertiesIfNotPresent = true;
 
-    // If the server adds new enum cases, that are unknown by an old spec/client, the client will fail to parse the network response.
-    // With this option enabled, each enum will have a new case, 'unknown_default_open_api', so that when the server sends an enum case that is not known by the client/spec, they can safely fallback to this case.
+    /**
+     * If the server adds new enum cases, that are unknown by an old spec/client, the client will fail to parse the network response.
+     * With this option enabled, each enum will have a new case, 'unknown_default_open_api', so that when the server sends an enum case that is not known by the client/spec, they can safely fallback to this case.
+     */
     @Setter protected boolean enumUnknownDefaultCase = false;
     protected String enumUnknownDefaultCaseName = "unknown_default_open_api";
 
-    // make openapi available to all methods
+    /**
+     * make openapi available to all methods
+     */
     protected OpenAPI openAPI;
 
-    // A cache to efficiently lookup a Schema instance based on the return value of `toModelName()`.
+    /**
+     * A cache to efficiently lookup a Schema instance based on the return value of `toModelName()`.
+     */
     private Map<String, Schema> modelNameToSchemaCache;
 
-    // A cache to efficiently lookup schema `toModelName()` based on the schema Key
+    /**
+     * A cache to efficiently lookup schema `toModelName()` based on the schema Key
+     */
     private final Map<String, String> schemaKeyToModelNameCache = new HashMap<>();
 
     protected boolean loadDeepObjectIntoItems = true;
 
-    // if true then baseTypes will be imported
+    /**
+     * if true then baseTypes will be imported
+     */
     protected boolean importBaseType = true;
 
-    // if true then container types will be imported
+    /**
+     * if true then container types will be imported
+     */
     protected boolean importContainerType = true;
 
     protected boolean addSuffixToDuplicateOperationNicknames = true;
 
-    // Whether to automatically hardcode params that are considered Constants by OpenAPI Spec
+    /**
+     * Whether to automatically hardcode params that are considered Constants by OpenAPI Spec
+     */
     @Setter protected boolean autosetConstants = false;
 
     @Setter @Getter boolean arrayDefaultToEmpty, arrayNullableDefaultToEmpty, arrayOptionalNullableDefaultToEmpty, arrayOptionalDefaultToEmpty;
@@ -458,7 +518,9 @@ public class DefaultCodegen implements CodegenConfig {
         additionalProperties.put("lambda", lambdas);
     }
 
-    // override with any special post-processing for all models
+    /**
+     * override with any special post-processing for all models
+     */
     @Override
     @SuppressWarnings("static-method")
     public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
@@ -789,7 +851,9 @@ public class DefaultCodegen implements CodegenConfig {
         return false;
     }
 
-    // override with any special post-processing
+    /**
+     * override with any special post-processing
+     */
     @Override
     @SuppressWarnings("static-method")
     public ModelsMap postProcessModels(ModelsMap objs) {
@@ -972,7 +1036,9 @@ public class DefaultCodegen implements CodegenConfig {
         typeAliases = getAllAliases(ModelUtils.getSchemas(openAPI));
     }
 
-    // override with any message to be shown right before the process finishes
+    /**
+     * override with any message to be shown right before the process finishes
+     */
     @Override
     @SuppressWarnings("static-method")
     public void postProcess() {
@@ -983,46 +1049,60 @@ public class DefaultCodegen implements CodegenConfig {
         System.out.println("############################################################################################");
     }
 
-    // override with any special post-processing
+    /**
+     * override with any special post-processing
+     */
     @Override
     @SuppressWarnings("static-method")
     public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> allModels) {
         return objs;
     }
 
-    // override with any special post-processing
+    /**
+     * override with any special post-processing
+     */
     @Override
     @SuppressWarnings("static-method")
     public WebhooksMap postProcessWebhooksWithModels(WebhooksMap objs, List<ModelMap> allModels) {
         return objs;
     }
 
-    // override with any special post-processing
+    /**
+     * override with any special post-processing
+     */
     @Override
     @SuppressWarnings("static-method")
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
         return objs;
     }
 
-    // override to post-process any model properties
+    /**
+     * override to post-process any model properties
+     */
     @Override
     @SuppressWarnings("unused")
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
     }
 
-    // override to post-process any response
+    /**
+     * override to post-process any response
+     */
     @Override
     @SuppressWarnings("unused")
     public void postProcessResponseWithProperty(CodegenResponse response, CodegenProperty property) {
     }
 
-    // override to post-process any parameters
+    /**
+     * override to post-process any parameters
+     */
     @Override
     @SuppressWarnings("unused")
     public void postProcessParameter(CodegenParameter parameter) {
     }
 
-    //override with any special handling of the entire OpenAPI spec document
+    /**
+     * override with any special handling of the entire OpenAPI spec document
+     */
     @Override
     @SuppressWarnings("unused")
     public void preprocessOpenAPI(OpenAPI openAPI) {
@@ -1107,27 +1187,35 @@ public class DefaultCodegen implements CodegenConfig {
         }
     }
 
-    // override with any special handling of the entire OpenAPI spec document
+    /**
+     * override with any special handling of the entire OpenAPI spec document
+     */
     @Override
     @SuppressWarnings("unused")
     public void processOpenAPI(OpenAPI openAPI) {
     }
 
-    // override with any special handling of the JMustache compiler
+    /**
+     * override with any special handling of the JMustache compiler
+     */
     @Override
     @SuppressWarnings("unused")
     public Compiler processCompiler(Compiler compiler) {
         return compiler;
     }
 
-    // override with any special handling for the templating engine
+    /**
+     * override with any special handling for the templating engine
+     */
     @Override
     @SuppressWarnings("unused")
     public TemplatingEngineAdapter processTemplatingEngine(TemplatingEngineAdapter templatingEngine) {
         return templatingEngine;
     }
 
-    // override with any special text escaping logic
+    /**
+     * override with any special text escaping logic
+     */
     @Override
     @SuppressWarnings("static-method")
     public String escapeText(String input) {
@@ -1190,7 +1278,9 @@ public class DefaultCodegen implements CodegenConfig {
                         .replace("\"", "\\\""));
     }
 
-    // override with any special encoding and escaping logic
+    /**
+     * override with any special encoding and escaping logic
+     */
     @Override
     @SuppressWarnings("static-method")
     public String encodePath(String input) {
@@ -5607,7 +5697,9 @@ public class DefaultCodegen implements CodegenConfig {
         return null;
     }
 
-    // TODO revise below as it should be replaced by ModelUtils.isByteArraySchema(parameterSchema)
+    /**
+     * TODO revise below as it should be replaced by ModelUtils.isByteArraySchema(parameterSchema)
+     */
     public boolean isDataTypeBinary(String dataType) {
         if (dataType != null) {
             return dataType.toLowerCase(Locale.ROOT).startsWith("byte");
@@ -5616,7 +5708,9 @@ public class DefaultCodegen implements CodegenConfig {
         }
     }
 
-    // TODO revise below as it should be replaced by ModelUtils.isFileSchema(parameterSchema)
+    /**
+     * TODO revise below as it should be replaced by ModelUtils.isFileSchema(parameterSchema)
+     */
     public boolean isDataTypeFile(String dataType) {
         if (dataType != null) {
             return dataType.toLowerCase(Locale.ROOT).equals("file");
@@ -8710,11 +8804,11 @@ public class DefaultCodegen implements CodegenConfig {
         return false;
     }
 
-    /*
-        A function to convert yaml or json ingested strings like property names
-        And convert special characters like newline, tab, carriage return
-        Into strings that can be rendered in the language that the generator will output to
-        */
+    /**
+     * A function to convert yaml or json ingested strings like property names
+     * And convert special characters like newline, tab, carriage return
+     * Into strings that can be rendered in the language that the generator will output to
+     */
     protected String handleSpecialCharacters(String name) {
         return name;
     }
