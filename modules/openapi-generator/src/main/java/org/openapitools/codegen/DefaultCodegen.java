@@ -518,9 +518,6 @@ public class DefaultCodegen implements CodegenConfig {
         additionalProperties.put("lambda", lambdas);
     }
 
-    /**
-     * override with any special post-processing for all models
-     */
     @Override
     @SuppressWarnings("static-method")
     public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {

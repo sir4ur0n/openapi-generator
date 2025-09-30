@@ -214,6 +214,9 @@ public interface CodegenConfig {
 
     void postProcess();
 
+    /**
+     * Override with any special post-processing for all models
+     */
     Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs);
 
     ModelsMap postProcessModels(ModelsMap objs);

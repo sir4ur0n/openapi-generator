@@ -30,22 +30,28 @@ import java.util.*;
  */
 @JsonIgnoreProperties({"parentModel", "interfaceModels"})
 public class CodegenModel implements IJsonSchemaValidationProperties {
-    // The parent model name from the schemas. The parent is determined by inspecting the allOf, anyOf and
-    // oneOf attributes in the OAS. First codegen inspects 'allOf', then 'anyOf', then 'oneOf'.
-    // If there are multiple object references in the attribute ('allOf', 'anyOf', 'oneOf'), and one of the
-    // object is a discriminator, that object is set as the parent. If no discriminator is specified,
-    // codegen returns the first one in the list, i.e. there is no obvious parent in the OpenAPI specification.
-    // When possible, the mustache templates should use 'allParents' to handle multiple parents.
+    /**
+     * The parent model name from the schemas. The parent is determined by inspecting the allOf, anyOf and
+     * oneOf attributes in the OAS. First codegen inspects 'allOf', then 'anyOf', then 'oneOf'.
+     * If there are multiple object references in the attribute ('allOf', 'anyOf', 'oneOf'), and one of the
+     * object is a discriminator, that object is set as the parent. If no discriminator is specified,
+     * codegen returns the first one in the list, i.e. there is no obvious parent in the OpenAPI specification.
+     * When possible, the mustache templates should use 'allParents' to handle multiple parents.
+     */
     @Getter @Setter
     public String parent, parentSchema;
     @Getter @Setter
     public List<String> interfaces;
-    // The list of parent model name from the schemas. In order of preference, the parent is obtained
-    // from the 'allOf' attribute, then 'anyOf', and finally 'oneOf'.
+    /**
+     * The list of parent model name from the schemas. In order of preference, the parent is obtained
+     * from the 'allOf' attribute, then 'anyOf', and finally 'oneOf'.
+     */
     @Getter @Setter
     public List<String> allParents;
 
-    // References to parent and interface CodegenModels. Only set when code generator supports inheritance.
+    /**
+     * References to parent and interface CodegenModels. Only set when code generator supports inheritance.
+     */
     @Getter @Setter
     public CodegenModel parentModel;
     @Getter @Setter
@@ -53,27 +59,39 @@ public class CodegenModel implements IJsonSchemaValidationProperties {
     @Getter @Setter
     public List<CodegenModel> children;
 
-    // anyOf, oneOf, allOf
+    /**
+     * anyOf, oneOf, allOf
+     */
     public Set<String> anyOf = new TreeSet<>();
     public Set<String> oneOf = new TreeSet<>();
     public Set<String> allOf = new TreeSet<>();
 
-    // direct descendants that are allowed to extend the current model
+    /**
+     * direct descendants that are allowed to extend the current model
+     */
     public List<String> permits = new ArrayList<>();
 
-    // The schema name as written in the OpenAPI document
-    // If it's a reserved word, it will be escaped.
+    /**
+     * The schema name as written in the OpenAPI document
+     * If it's a reserved word, it will be escaped.
+     */
     @Getter @Setter
     public String name;
-    // The original schema name as written in the OpenAPI document.
+    /**
+     * The original schema name as written in the OpenAPI document.
+     */
     @Getter @Setter
     public String schemaName;
-    // The language-specific name of the class that implements this schema.
-    // The name of the class is derived from the OpenAPI schema name with formatting rules applied.
-    // The classname is derived from the OpenAPI schema name, with sanitization and escaping rules applied.
+    /**
+     * The language-specific name of the class that implements this schema.
+     * The name of the class is derived from the OpenAPI schema name with formatting rules applied.
+     * The classname is derived from the OpenAPI schema name, with sanitization and escaping rules applied.
+     */
     @Getter @Setter
     public String classname;
-    // The value of the 'title' attribute in the OpenAPI document.
+    /**
+     * The value of the 'title' attribute in the OpenAPI document.
+     */
     @Getter @Setter
     public String title;
     @Getter @Setter
@@ -146,7 +164,9 @@ public class CodegenModel implements IJsonSchemaValidationProperties {
     @Getter @Setter
     public Map<String, Object> allowableValues;
 
-    // Sorted sets of required parameters.
+    /**
+     * Sorted sets of required parameters.
+     */
     @Getter @Setter
     public Set<String> mandatory = new TreeSet<>(); // without parent's required properties
     @Getter @Setter
@@ -1119,9 +1139,8 @@ public class CodegenModel implements IJsonSchemaValidationProperties {
         return sb.toString();
     }
 
-    /*
+    /**
      * To clean up mapped models if needed and add mapped models to imports
-     *
      * @param cleanUpMappedModels Clean up mapped models if set to true
      */
     public void addDiscriminatorMappedModelsImports(boolean cleanUpMappedModels) {
