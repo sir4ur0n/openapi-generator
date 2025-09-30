@@ -66,8 +66,11 @@ public class CodegenProperty implements Cloneable, IJsonSchemaValidationProperti
     @Setter public String baseType;
     @Getter @Setter
     public String containerType;
+    /**
+     * language-specified container type (e.g. `dict` in python for map)
+     */
     @Getter @Setter
-    public String containerTypeMapped; // language-specified container type (e.g. `dict` in python for map)
+    public String containerTypeMapped;
 
     /**
      * The value of the 'title' attribute in the OpenAPI schema.
@@ -151,8 +154,14 @@ public class CodegenProperty implements Cloneable, IJsonSchemaValidationProperti
     public boolean isBinary;
     public boolean isFile;
     public boolean isBoolean;
-    public boolean isDate; // full-date notation as defined by RFC 3339, section 5.6, for example, 2017-07-21
-    public boolean isDateTime; // the date-time notation as defined by RFC 3339, section 5.6, for example, 2017-07-21T17:32:28Z
+    /**
+     * full-date notation as defined by RFC 3339, section 5.6, for example, 2017-07-21
+     */
+    public boolean isDate;
+    /**
+     * the date-time notation as defined by RFC 3339, section 5.6, for example, 2017-07-21T17:32:28Z
+     */
+    public boolean isDateTime;
     public boolean isUuid;
     public boolean isUri;
     public boolean isEmail;
@@ -176,44 +185,83 @@ public class CodegenProperty implements Cloneable, IJsonSchemaValidationProperti
      * datatype is the generic inner parameter of a std::optional for C++, or Optional (Java)
      */
     public boolean isOptional;
-    public boolean isEnum; // true if the enum is defined inline
-    public boolean isInnerEnum; // Enums declared inline will be located inside the generic model, changing how the enum is referenced in some cases.
-    public boolean isEnumRef; // true if it's a reference to an enum
+    /**
+     * true if the enum is defined inline
+     */
+    public boolean isEnum;
+    /**
+     * Enums declared inline will be located inside the generic model, changing how the enum is referenced in some cases.
+     */
+    public boolean isInnerEnum;
+    /**
+     * true if it's a reference to an enum
+     */
+    public boolean isEnumRef;
     public boolean isReadOnly;
     public boolean isWriteOnly;
     public boolean isNullable;
     public boolean isSelfReference;
     public boolean isCircularReference;
     public boolean isDiscriminator;
-    public boolean isNew; // true when this property overrides an inherited property
-    public Boolean isOverridden; // true if the property is a parent property (not defined in child/current schema)
+    /**
+     * true when this property overrides an inherited property
+     */
+    public boolean isNew;
+    /**
+     * true if the property is a parent property (not defined in child/current schema)
+     */
+    public Boolean isOverridden;
     @Getter @Setter
     public List<String> _enum;
     @Getter @Setter
     public Map<String, Object> allowableValues;
-    // If 'additionalProperties' is not set, items is null.
-    // If 'additionalProperties' is set to a type or refers to a type, 'items' provides the type information for
-    // the undeclared properties.
+    /**
+     * <ul>
+     *     <li>If 'additionalProperties' is not set, items is null.</li>
+     *     <li>If 'additionalProperties' is set to a type or refers to a type, 'items' provides the type information for the undeclared properties.</li>
+     * </ul>
+     */
     public CodegenProperty items;
     public CodegenProperty additionalProperties;
-    public List<CodegenProperty> vars = new ArrayList<CodegenProperty>(); // all properties (without parent's properties)
+    /**
+     * all properties (without parent's properties)
+     */
+    public List<CodegenProperty> vars = new ArrayList<CodegenProperty>();
     public List<CodegenProperty> requiredVars = new ArrayList<>();
     public CodegenProperty mostInnerItems;
     @Getter @Setter
     public Map<String, Object> vendorExtensions = new HashMap<String, Object>();
-    public boolean hasValidation; // true if pattern, maximum, etc are set (only used in the mustache template)
+    /**
+     * true if pattern, maximum, etc are set (only used in the mustache template)
+     */
+    public boolean hasValidation;
     public boolean isInherited;
     public String discriminatorValue;
 
+    /**
+     * property name in lower case
+     */
     @Getter @Setter
-    public String nameInLowerCase; // property name in lower case
+    public String nameInLowerCase;
+    /**
+     * property name in camel case (e.g.  modifiedDate)
+     */
     @Getter @Setter
-    public String nameInCamelCase; // property name in camel case (e.g.  modifiedDate)
+    public String nameInCamelCase;
+    /**
+     * property name in pascal case (e.g. ModifiedDate)
+     */
     @Getter @Setter
-    public String nameInPascalCase; // property name in pascal case (e.g. ModifiedDate)
+    public String nameInPascalCase;
+    /**
+     * property name in upper snake case
+     */
     @Getter
-    public String nameInSnakeCase; // property name in upper snake case
-    // enum name based on the property name, usually use as a prefix (e.g. VAR_NAME) for enum name (e.g. VAR_NAME_VALUE1)
+    public String nameInSnakeCase;
+
+    /**
+     * enum name based on the property name, usually use as a prefix (e.g. VAR_NAME) for enum name (e.g. VAR_NAME_VALUE1)
+     */
     @Getter @Setter
     public String enumName;
     public Integer maxItems;
