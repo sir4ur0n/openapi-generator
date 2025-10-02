@@ -4,14 +4,14 @@ title: Documentation for the OCaml Generator
 
 ## METADATA
 
-| Property | Value | Notes |
-| -------- | ----- | ----- |
-| generator name | ocaml | pass this to the generate command after -g |
-| generator stability | STABLE | |
-| generator type | CLIENT | |
-| generator language | OCaml | |
-| generator default templating engine | mustache | |
-| helpTxt | Generates an OCaml client library (beta). | |
+| Property                            | Value                                                                 | Notes                                      |
+|-------------------------------------|-----------------------------------------------------------------------|--------------------------------------------|
+| generator name                      | ocaml-recursive                                                       | pass this to the generate command after -g |
+| generator stability                 | STABLE                                                                |                                            |
+| generator type                      | CLIENT                                                                |                                            |
+| generator language                  | OCaml                                                                 |                                            |
+| generator default templating engine | mustache                                                              |                                            |
+| helpTxt                             | Generates an OCaml client library (with support for recursive types). |                                            |
 
 ## CONFIG OPTIONS
 These options may be applied as additional-properties (cli) or configOptions (plugins). Refer to [configuration docs](https://openapi-generator.tech/docs/configuration) for more details.

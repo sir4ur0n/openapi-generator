@@ -49,6 +49,7 @@ The following generators are available:
 * [nim (beta)](generators/nim.md)  
 * [objc](generators/objc.md)  
 * [ocaml](generators/ocaml.md)  
+* [ocaml-recursive](generators/ocaml-recursive.md)  
 * [perl](generators/perl.md)  
 * [php](generators/php.md)  
 * [php-dt (beta)](generators/php-dt.md)  

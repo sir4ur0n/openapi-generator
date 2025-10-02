@@ -1,0 +1,6 @@
+generatorName: ocaml-recursive
+outputDir: samples/client/petstore/ocaml-recursive-additional-properties
+inputSpec: modules/openapi-generator/src/test/resources/3_0/ocaml-recursive/additional-properties.yaml
+templateDir: modules/openapi-generator/src/main/resources/ocaml-recursive
+additionalProperties:
+  packageName: petstore_client

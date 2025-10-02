@@ -356,8 +356,12 @@
         "sidebar_label": "objc"
       },
       "generators/ocaml": {
-        "title": "Config Options for ocaml",
+        "title": "Config Options for OCaml",
         "sidebar_label": "ocaml"
+      },
+      "generators/ocaml-recursive": {
+        "title": "Config Options for OCaml (support for recursive types)",
+        "sidebar_label": "ocaml-recursive"
       },
       "generators/openapi-yaml": {
         "title": "Config Options for openapi-yaml",

@@ -1,0 +1,6 @@
+generatorName: ocaml-recursive
+outputDir: samples/client/petstore/ocaml-recursive-oneOf-primitive
+inputSpec: modules/openapi-generator/src/test/resources/3_0/oneOf_primitive.yaml
+templateDir: modules/openapi-generator/src/main/resources/ocaml-recursive
+additionalProperties:
+  packageName: petstore_client
